@@ -17,8 +17,11 @@
         <header class="container my-2 d-flex flex-wrap justify-content-center">
             <input type="text" v-model="newTodo" class="form-control text-center w-75">
             <button class="btn btn-primary ms-2" @click="addItem">Aggiungi</button>
-            <input type="text"  class="form-control text-center w-25 m-2">
-            <button class="btn btn-primary m-2">Cerca</button>
+           
+            <div class="search-container ">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input form-control " placeholder="Cerca..." v-model="searchQuery" @input="findTask">
+            </div>
         </header>
         <main class="container">
             <ul class="list-group">

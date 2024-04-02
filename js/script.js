@@ -26,6 +26,7 @@ createApp({
         return {
             todo,
             newTodo: '',
+            searchQuery: '',
         }
     },
     methods: {
@@ -47,17 +48,27 @@ createApp({
         }
         let somma = 0;
         this.todo.forEach((el)=>{
-            if(somma<todo.id){
+            if(somma<el.id){
                 somma= el.id;
             }
-        })
-        newitem.id = this.somma;
+        });
+        newitem.id = somma+1;
         this.newTodo = '';
-        if(newitem.text != ''){
+        if(newitem.text.length > 0){
             this.todo.push(newitem);
         }    
-            
+        console.log(this.todo)
+    },
+    findTask(){
+        this.todo = todo.filter((el)=>{
+            return el.text.toLowerCase().includes(this.searchQuery.toLowerCase())
+        })
+        console.log(this.todo)
+
+    },
+    },
+    computed: {
+        
     },
 
-    }
 }).mount('#app')
