@@ -32,5 +32,11 @@ createApp({
         const i = this.todo.find(todo => todo.id === id)
         i.done = !i.done
     },
+    removeItem(id){
+        const i = this.todo.findIndex(todo => todo.id === id)
+        if(i != -1){
+            this.todo.splice(i, 1);
+        }
+    }
     }
 }).mount('#app')
