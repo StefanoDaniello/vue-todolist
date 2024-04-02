@@ -24,7 +24,8 @@ const {createApp} = Vue;
 createApp({
     data() {
         return {
-            todo
+            todo,
+            newTodo: '',
         }
     },
     methods: {
@@ -32,11 +33,31 @@ createApp({
         const i = this.todo.find(todo => todo.id === id)
         i.done = !i.done
     },
-    removeItem(id){
+    removeItem(id,done){
         const i = this.todo.findIndex(todo => todo.id === id)
-        if(i != -1){
+        if(i != -1 && done){
             this.todo.splice(i, 1);
         }
-    }
+    },
+    addItem(){
+        const newitem={
+            id:null,
+            text:this.newTodo,
+            done:false
+        }
+        let somma = 0;
+        this.todo.forEach((el)=>{
+            if(somma<todo.id){
+                somma= el.id;
+            }
+        })
+        newitem.id = this.somma;
+        this.newTodo = '';
+        if(newitem.text != ''){
+            this.todo.push(newitem);
+        }    
+            
+    },
+
     }
 }).mount('#app')
