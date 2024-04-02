@@ -16,72 +16,79 @@ Bonus:
 2- cliccando sul testo dell'item, invertire il valore della proprietà done del todo corrispondente (se done era uguale a false, impostare true e viceversa)
 */
 
-import {todo} from "./data.js";
-// import getRndInteger from "./utility.js";
+import { todo } from "./data.js";
 
-const {createApp} = Vue;
+const { createApp } = Vue;
 
 createApp({
     data() {
         return {
-            todo,
+            originalTodo: todo,
+            todo: [...todo],
             newTodo: '',
             searchQuery: '',
-            done:'',
+            done: '',
         }
     },
     methods: {
-    ToDoComplete(id) {
-        const i = this.todo.find(todo => todo.id === id)
-        i.done = !i.done
-    },
-    removeItem(id){
-        const i = this.todo.findIndex(todo => todo.id === id)
-        if(i != -1){
-            this.todo.splice(i, 1);
-        }
-    },
-    addItem(){
-        const newitem={
-            id:null,
-            text:this.newTodo,
-            done:false
-        }
-        let somma = 0;
-        this.todo.forEach((el)=>{
-            if(somma<el.id){
-                somma= el.id;
+        ToDoComplete(id) {
+            const task = this.todo.find(task => task.id === id);
+            task.done = !task.done;
+        },
+        removeItem(id) {
+            const index = this.todo.findIndex(task => task.id === id);
+            if (index !== -1) {
+                this.todo.splice(index, 1);
+                // Effettua la stessa operazione sulla lista originale
+                const originalIndex = this.originalTodo.findIndex(task => task.id === id);
+                if (originalIndex !== -1) {
+                    this.originalTodo.splice(originalIndex, 1);
+                }
             }
-        });
-        newitem.id = somma+1;
-        this.newTodo = '';
-        if(newitem.text.length > 0){
-            this.todo.push(newitem);
-        }    
-        console.log(this.todo)
-    },
-    findTask(){
-        this.todo = todo.filter((el)=>{
-           return el.text.toLowerCase().includes(this.searchQuery.toLowerCase())
-        })
-       console.log(this.todo)
-        
-   },
+        },
+        addItem() {
+            const newTask = {
+                id: null,
+                text: this.newTodo,
+                done: false
+            };
+
+            let maxId = 0;
+            this.todo.forEach((task) => {
+                if (task.id > maxId) {
+                    maxId = task.id;
+                }
+            });
+
+            newTask.id = maxId + 1;
+            this.newTodo = '';
+
+            if (newTask.text.length > 0) {
+                this.todo.push(newTask);
+                this.originalTodo.push(newTask);
+            }
+        },
+        findTask() {
+            this.todo = this.originalTodo.filter((task) => {
+                return task.text.toLowerCase().includes(this.searchQuery.toLowerCase())
+            });
+            console.log(this.todo);
+        },
     },
     computed: {
-        filteredTodo(){
-            return this.todo.filter((el) =>{
-                if(this.done ===''){
+        filteredTodo() {
+            return this.todo.filter((el) => {
+                if (this.done === '') {
                     return el;
                 }
-                if(this.done === 'completed'){
+                if (this.done === 'completed') {
                     return el.done;
                 }
-                if(this.done === 'notcompleted'){
+                if (this.done === 'notcompleted') {
                     return !el.done;
                 }
             });
         }
     },
 
-}).mount('#app')
+}).mount('#app');
