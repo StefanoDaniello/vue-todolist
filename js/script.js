@@ -27,6 +27,7 @@ createApp({
             todo,
             newTodo: '',
             searchQuery: '',
+            done:'',
         }
     },
     methods: {
@@ -34,9 +35,9 @@ createApp({
         const i = this.todo.find(todo => todo.id === id)
         i.done = !i.done
     },
-    removeItem(id,done){
+    removeItem(id){
         const i = this.todo.findIndex(todo => todo.id === id)
-        if(i != -1 && done){
+        if(i != -1){
             this.todo.splice(i, 1);
         }
     },
@@ -61,14 +62,26 @@ createApp({
     },
     findTask(){
         this.todo = todo.filter((el)=>{
-            return el.text.toLowerCase().includes(this.searchQuery.toLowerCase())
+           return el.text.toLowerCase().includes(this.searchQuery.toLowerCase())
         })
-        console.log(this.todo)
-
-    },
+       console.log(this.todo)
+        
+   },
     },
     computed: {
-        
+        filteredTodo(){
+            return this.todo.filter((el) =>{
+                if(this.done ===''){
+                    return el;
+                }
+                if(this.done === 'completed'){
+                    return el.done;
+                }
+                if(this.done === 'notcompleted'){
+                    return !el.done;
+                }
+            });
+        }
     },
 
 }).mount('#app')
