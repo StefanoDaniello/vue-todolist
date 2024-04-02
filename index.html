@@ -13,35 +13,45 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="js/script.js" defer type="module"></script>
     <title>Document</title>
-    <div id="app">
-        <header class="container my-2 d-flex flex-wrap justify-content-center">
-            <input type="text" v-model="newTodo" class="form-control text-center w-75">
-            <button class="btn btn-primary ms-2" @click="addItem">Aggiungi</button>
-           
-            <div class="d-flex align-items-center">
-                <div class="search-container">
-                   <input type="text" class="search-input form-control " placeholder="Cerca..." v-model="searchQuery" @input="findTask">
-                   <i class="fas fa-search search-icon"></i>
-               </div>  
-               <select class="form-select w-25 p-3" name="done" id="done" v-model="done" >
-                   <option value="">Filter</option>
-                   <option value="completed">Completed</option>
-                   <option value="notcompleted">Not completed</option>
-               </select>
-           </div> 
-           
-        </header>
-        <main class="container">
-            <ul class="list-group">
-                <li class="list-group-item d-flex justify-content-between " v-for="(todo,index) in filteredTodo" :key="todo.id">
-                   <span :class="{'text-decoration-line-through text-secondary' : todo.done}" role="button" @click="ToDoComplete(todo.id)">
-                        {{todo.text}}
-                    </span>
-                    <i class="fa-solid fa-trash p-2" @click="removeItem(todo.id)" role="button"></i>
-                </li>
-            </ul>
-            
-        </main>
+    <div id="app" class="app">
+        <div :class="['app', { 'dark-mode': darkMode }]">
+            <div @click="toggleMode" :class="{ 'toggle-btn--dark': darkMode }" id="toggle-btn">
+                <div class="moon-sun"></div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <h1 class="border rounded-4 px-3">Dinamic Text</h1>
+            </div>
+            <header class="container my-2 d-flex flex-wrap justify-content-center">
+                <input type="text" v-model="newTodo" class="form-control text-center w-75">
+                <button class="btn btn-primary ms-2" @click="addItem">Aggiungi</button>
+               
+                <div class="d-flex align-items-center">
+                    <div class="search-container">
+                       <input type="text" class="search-input form-control " placeholder="Cerca..." v-model="searchQuery" @input="findTask">
+                       <i class="fas fa-search search-icon"></i>
+                   </div>  
+                   <select class="form-select w-25 p-3" name="done" id="done" v-model="done" >
+                       <option value="">Filter</option>
+                       <option value="completed">Completed</option>
+                       <option value="notcompleted">Not completed</option>
+                   </select>
+               </div> 
+               
+            </header>
+            <main class="container">
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between " v-for="(todo,index) in filteredTodo" :key="todo.id">
+                       <span :class="{'text-decoration-line-through text-secondary' : todo.done}" role="button" @click="ToDoComplete(todo.id)">
+                            {{todo.text}}
+                        </span>
+                        <i class="fa-solid fa-trash p-2" @click="removeItem(todo.id)" role="button"></i>
+                    </li>
+                </ul>
+                
+            </main>
+
+        </div>
+
 
     </div>
 </head>

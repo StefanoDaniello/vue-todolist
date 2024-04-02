@@ -28,6 +28,7 @@ createApp({
             newTodo: '',
             searchQuery: '',
             done: '',
+            darkMode: false,
         }
     },
     methods: {
@@ -73,6 +74,9 @@ createApp({
                 return task.text.toLowerCase().includes(this.searchQuery.toLowerCase())
             });
             console.log(this.todo);
+        },
+        toggleMode() {
+            this.darkMode = !this.darkMode;
         },
     },
     computed: {
