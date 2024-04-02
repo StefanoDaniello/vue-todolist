@@ -28,5 +28,9 @@ createApp({
         }
     },
     methods: {
+    ToDoComplete(id) {
+        const i = this.todo.find(todo => todo.id === id)
+        i.done = !i.done
+    },
     }
 }).mount('#app')
